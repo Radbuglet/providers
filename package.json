@@ -8,7 +8,7 @@
         "directory": "/"
     },
     "scripts": {
-        "test": "echo \"No tests configured\" && exit 1"
+        "test": "echo No tests configured && exit 1"
     },
     "types": "lib.d.ts",
     "files": [

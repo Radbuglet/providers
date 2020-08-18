@@ -2,7 +2,7 @@
     "compilerOptions": {
         "strict": true,
         "target": "ES2015",
-        "module": "CommonJS"
-    },
-    "include": []
+        "declaration": true,
+        "noEmit": true
+    }
 }
