@@ -72,7 +72,7 @@ class MyOtherClass implements IProvider<[typeof MyClass, typeof MyClass2]> {  //
 
 Author: [radbuglet](https://github.com/radbuglet)
 
-Repository: [radbuglet/Providers](Here on GitHub)
+Repository: [Here on GitHub](https://github.com/radbuglet/Providers)
 
 License: [MIT](https://github.com/Radbuglet/Providers/blob/master/LICENSE)
 
