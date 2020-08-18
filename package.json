@@ -1,0 +1,18 @@
+{
+    "name": "ts-providers",
+    "version": "0.1.0",
+    "description": "A TypeScript declaration module adding automatic provider interface generation.",
+    "repository": {
+        "type": "Github",
+        "url": "https://github.com/radbuglet/Providers",
+        "directory": "/"
+    },
+    "scripts": {
+        "test": "echo \"No tests configured\" && exit 1"
+    },
+    "types": "lib.d.ts",
+    "files": [
+        "lib.d.ts"
+    ],
+    "license": "MIT"
+}
