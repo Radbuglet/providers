@@ -1,6 +1,6 @@
 {
     "name": "ts-providers",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "A TypeScript declaration module adding automatic provider interface generation.",
     "repository": {
         "type": "Github",
@@ -10,9 +10,11 @@
     "scripts": {
         "test": "echo No tests configured && exit 1"
     },
+    "main": "lib.js",
     "types": "lib.d.ts",
     "files": [
-        "lib.d.ts"
+        "lib.d.ts",
+        "lib.js"
     ],
     "license": "MIT"
 }

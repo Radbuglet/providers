@@ -14,8 +14,8 @@ type IProvidesMultiple<T extends IProvider[]> = UnionToIntersection<{
 }[number]>;
 
 // Friendly providers
-type ProvidersBaseType = IProvider | IProvider[];
-declare type IProvides<T extends ProvidersBaseType> = T extends IProvider ? IProvidesSingle<T> :
+type ProvidersBaseType = IProvider | [IProvider, ...IProvider[]];
+export type IProvides<T extends ProvidersBaseType> = T extends IProvider ? IProvidesSingle<T> :
     T extends IProvider[] ? IProvidesMultiple<T> : never;
-declare type $<T extends ProvidersBaseType> = IProvides<T>;
-declare type P$<T extends ProvidersBaseType> = IProvides<T>;
+export type $<T extends ProvidersBaseType> = IProvides<T>;
+export type P$<T extends ProvidersBaseType> = IProvides<T>;

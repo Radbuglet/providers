@@ -24,6 +24,14 @@ class MammalFamily<T extends IProvides<MammalController>> {
 }
 ```
 
+## Installation
+
+This module is made for TypeScript projects and requires a compile target that supports `symbols` (introduced in `ES6`). From there, you can install the module using `npm install ts-providers --save`. `ts-providers` is saved as a normal dependency because your emitted type declaration files will most likely include references to the helper types provided by this module.  Once installed, `IProvides` can be brought into scope like so:
+
+```typescript
+import {IProvides, $, P$} from "ts-providers";
+```
+
 ## Why providers?
 
 Providers play a crucial role in making composition over inheritance viable.
