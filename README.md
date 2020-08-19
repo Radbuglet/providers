@@ -90,5 +90,4 @@ Planned features:
 
 - Decorator (when they become stable) to generate the type identifier declaration and make it so the class automatically provides itself.
 - Add support for using any type of literal as the type to support older browsers who don't yet support symbols.
-- Write documentation.
-- Properly enforce visibility rules in `.d.ts`.
+- Add documentation

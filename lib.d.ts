@@ -1,21 +1,24 @@
-// Utils
-type Constructor = new(...args: any[]) => object;
-type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
+/**
+ * Represents a class constructor/type that contains a type static field for use
+ * in the provision interface.
+ */
+type IProvider = (new(...args: any[]) => object) & { readonly type: symbol; };
 
-// Internal providers
-type IProvider = Constructor & {
-    readonly type: symbol;
+/**
+ * Generates an interface for a class which provides a class of type "InstanceType<TClass>"". If "TReal" is provided,
+ * this type will be used instead of the InstanceType<TClass>. "TReal" is used when the provided class has some generic type information
+ * that cannot be inferred by "InstanceType".
+ */
+export type IProvides<TClass extends IProvider, TReal extends InstanceType<TClass> = never> = {
+    [_ in TClass["type"]]: TReal extends never ? InstanceType<TClass> : TReal
 };
-type IProvidesSingle<T extends IProvider> = {
-    [_ in T["type"]]: InstanceType<T>
-};
-type IProvidesMultiple<T extends IProvider[]> = UnionToIntersection<{
-    [K in keyof T]: T[K] extends IProvider ? IProvidesSingle<T[K]> : never
-}[number]>;
 
-// Friendly providers
-type ProvidersBaseType = IProvider | [IProvider, ...IProvider[]];
-export type IProvides<T extends ProvidersBaseType> = T extends IProvider ? IProvidesSingle<T> :
-    T extends IProvider[] ? IProvidesMultiple<T> : never;
-export type $<T extends ProvidersBaseType> = IProvides<T>;
-export type P$<T extends ProvidersBaseType> = IProvides<T>;
+/**
+ * @alias IProvides
+ */
+export type P$<TClass extends IProvider, TReal extends InstanceType<TClass> = never> = IProvides<TClass, TReal>;
+
+/**
+ * @alias IProvides
+ */
+export type $<TClass extends IProvider, TReal extends InstanceType<TClass> = never> = IProvides<TClass, TReal>;
