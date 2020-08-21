@@ -13,13 +13,13 @@ class BirdController {
     // ...
 }
 
-class Platypus implements IProvides<[MammalController, BirdController]> {
+class Platypus implements IProvides<typeof MammalController>, IProvides<typeof BirdController> {
     public readonly [MammalController.type] = new Mammal();
     public readonly [BirdController.type] = new BirdController();
     // ...
 }
 
-class MammalFamily<T extends IProvides<MammalController>> {
+class MammalFamily<T extends IProvides<typeof MammalController>> {
     // ...
 }
 ```
@@ -44,7 +44,7 @@ However, composition fails to import the biggest advantage of inheritance: the a
 
 `IProvider` is a TypeScript type alias that takes in the constructors of the classes an object provides and generates an interface populated with a unique field for every type. This, alongside its aliases `$` and `P$` are the only exports of the library. Because all these exports are just type aliases and interfaces, there is no actual runtime cost for using this library.
 
-In order to ensure that every providing getter is unique, this library uses symbols. Thus, in order for a class to be providable, it must have a read-only static field named `type` that contains a unique symbol, like so:
+In order to ensure that every providing getter is unique, this library uses symbols. Thus, in order for a class to be providable, it must have a read-only static field named `type` that contains a unique symbol.
 
 ```typescript
 class MyClass {
@@ -53,13 +53,23 @@ class MyClass {
 }
 ```
 
-From there, a class providing `MyClass` just has to implement the `IProvider` interface for that class:
+From there, a class providing `MyClass` just has to implement the `IProvider` interface for that class.
 
 ```typescript
 class MyOtherClass implements IProvider<typeof MyClass> {  // typeof MyClass refers to the class type instead of the instance type.
     public readonly [MyClass.type] = new MyClass();  // The "[typeof MyClass.type]: MyClass" interface member can be implemented using a field or a getter.
 }
 ```
+
+If `MyClass` is generic, `IProvider` can accept a second parameter specifying the instance type.
+
+```typescript
+class MyOtherClass implements IProvider<typeof MyClass, MyClass<string>> {
+    public readonly [MyClass.type] = new MyClass<string>();  // The same key is used for generic types.
+}
+```
+
+Since the field under which the classes are contained is solely dependent on the constructor type of the class, and not its instance type, you can't provide multiple instances of any class, even if the provided classes use different generic parameters.
 
 To access the provided field, just access the member field like any other `Symbol` based field like so:
 
@@ -68,11 +78,18 @@ const instance = new MyOtherClass();
 const child_instance = instance[MyClass.type];
 ```
 
-Because providing multiple classes is so common, `IProvider` can also take a tuple of the classes it provides like so:
+If a class provides multiple types, you can combine the interfaces like any other TypeScript interface.
 
 ```typescript
-class MyOtherClass implements IProvider<[typeof MyClass, typeof MyClass2]> {  // This is equivalent to IProvider<typeof MyClass> & IProvider<typeof MyClass2>
-    // ...
+// Accepting multiple interfaces
+function takesThings(instance: IProvides<typeof TypeA> & IProvides<typeof TypeB>) {}
+
+function takesThingsShortHand(instance: P$<typeof TypeA> & P$<typeof TypeB>) {}
+
+// Providing multiple interfaces
+class ProvidesThings implements IProvides<typeof TypeA>, IProvides<typeof TypeB, TypeB<...>> {
+	public readonly [TypeA.type] = new TypeA();
+    public readonly [TypeB.type] = new TypeB<...>();
 }
 ```
 
