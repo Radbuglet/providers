@@ -1,10 +1,10 @@
 {
     "name": "ts-providers",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "description": "A TypeScript declaration module adding automatic provider interface generation.",
     "repository": {
         "type": "Github",
-        "url": "https://github.com/radbuglet/Providers",
+        "url": "https://github.com/radbuglet/providers",
         "directory": "/"
     },
     "scripts": {

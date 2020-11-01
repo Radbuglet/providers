@@ -13,16 +13,16 @@ type IProvider = Class<any> & { readonly type: symbol; };
  * this type will be used instead of the InstanceType<TClass>. "TReal" is used when the provided class has some generic type information
  * that cannot be inferred by "InstanceType".
  */
-export type IProvides<TClass extends IProvider, TReal extends ClassInstance<TClass> = never> = {
-    [_ in TClass["type"]]: TReal extends never ? ClassInstance<TClass> : TReal
+export type IProvides<TClass extends IProvider, TReal extends ClassInstance<TClass> = ClassInstance<TClass>> = {
+    [_ in TClass["type"]]: TReal
 };
 
 /**
  * @alias IProvides
  */
-export type P$<TClass extends IProvider, TReal extends ClassInstance<TClass> = never> = IProvides<TClass, TReal>;
+export type P$<TClass extends IProvider, TReal extends ClassInstance<TClass> = ClassInstance<TClass>> = IProvides<TClass, TReal>;
 
 /**
  * @alias IProvides
  */
-export type $<TClass extends IProvider, TReal extends ClassInstance<TClass> = never> = IProvides<TClass, TReal>;
+export type $<TClass extends IProvider, TReal extends ClassInstance<TClass> = ClassInstance<TClass>> = IProvides<TClass, TReal>;
